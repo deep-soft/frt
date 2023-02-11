@@ -50,7 +50,7 @@ jobs:
         cd bin
         7z a ../frt-${{ matrix.arch }}.zip frt-${{ matrix.arch }}.exe
         cd ..
-        echo ASSET=frt-${{ matrix.arch }}.zip >> $GITHUB_ENV
+        echo "ASSET=frt-${{ matrix.arch }}.zip" >> $GITHUB_ENV        
         dir frt-${{ matrix.arch }}.zip
 
     - name: Build Windows x64
@@ -65,8 +65,12 @@ jobs:
         cd bin
         7z a ../frt-${{ matrix.arch }}.zip frt-${{ matrix.arch }}.exe
         cd ..
-        echo ASSET=frt-${{ matrix.arch }}.zip >> $GITHUB_ENV
+        echo "ASSET=frt-${{ matrix.arch }}.zip" >> $GITHUB_ENV                
         dir frt-${{ matrix.arch }}.zip
+
+    - name: Check Release
+      run: |
+        7z l ${{ env.ASSET }}
 
     - name: Publish Release
       uses: deep-soft/action-gh-release@v1
@@ -117,19 +121,11 @@ jobs:
         mkdir bin
         if [ "$CC" == "" ]; then CC=gcc ; fi
         $CC frt.cpp frt_shared.c wildmat.c -o bin/frt-${{ matrix.arch }} "$@"
-        echo "ASSET=bin/frt-${{ matrix.arch }}" >> $GITHUB_ENV
-
-    - name: Strip release binary (linux)
-      if: matrix.build == 'linux'
-      run: strip ${{ env.ASSET }}
-
-    - name: Strip release binary (linux-arm-aarch64)
-      if: matrix.build == 'linux-arm-aarch64'
-      run: strip ${{ env.ASSET }}
-
-    - name: Strip release binary (linux-arm-v7)
-      if: matrix.build == 'linux-arm-v7'
-      run: strip ${{ env.ASSET }}
+        strip bin/frt-${{ matrix.arch }}
+        cd bin
+        tar --exclude=*.tar* -cv frt-${{ matrix.arch }} | xz -9 > ../frt-${{ matrix.arch }}.tar.xz
+        cd ..
+        echo "ASSET=frt-${{ matrix.arch }}.tar.xz" >> $GITHUB_ENV
 
     - name: Publish Release
       uses: deep-soft/action-gh-release@v1
