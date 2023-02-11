@@ -47,8 +47,11 @@ jobs:
         echo "cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.arch }}.exe" >> cmd_compile.bat
         type cmd_compile.bat
         cmd /c cmd_compile.bat
-        echo ASSET=bin/frt-${{ matrix.arch }}.exe >> $GITHUB_ENV
-        echo ASSET=bin/frt-${{ matrix.arch }}.exe
+        cd bin
+        7z a ../frt-${{ matrix.arch }}.zip frt-${{ matrix.arch }}.exe
+        cd ..
+        echo ASSET=frt-${{ matrix.arch }}.zip >> $GITHUB_ENV
+        dir frt-${{ matrix.arch }}.zip
 
     - name: Build Windows x64
       if: matrix.arch == 'x64'
@@ -59,8 +62,11 @@ jobs:
         echo "cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.arch }}.exe" >> cmd_compile.bat
         type cmd_compile.bat
         cmd /c cmd_compile.bat
-        echo ASSET=bin/frt-${{ matrix.arch }}.exe >> $GITHUB_ENV
-        echo ASSET=bin/frt-${{ matrix.arch }}.exe
+        cd bin
+        7z a ../frt-${{ matrix.arch }}.zip frt-${{ matrix.arch }}.exe
+        cd ..
+        echo ASSET=frt-${{ matrix.arch }}.zip >> $GITHUB_ENV
+        dir frt-${{ matrix.arch }}.zip
 
     - name: Publish Release
       uses: deep-soft/action-gh-release@v1
@@ -78,22 +84,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        build: [linux, linux-arm-aarch64, linux-arm-v7]
+#        build: [linux, linux-arm-aarch64, linux-arm-v7]
+        build: [linux]
         include:
         - build: linux
           os: ubuntu-22.04
           arch: x86_64
           cc: [gcc]
 
-        - build: linux-arm-aarch64
-          os: ubuntu-22.04
-          arch: aarch64
-          cc: [gcc]
+#        - build: linux-arm-aarch64
+#          os: ubuntu-22.04
+#          arch: aarch64
+#          cc: [gcc]
           
-        - build: linux-arm-v7
-          os: ubuntu-22.04
-          arch: armv7
-          cc: [gcc]
+#        - build: linux-arm-v7
+#          os: ubuntu-22.04
+#          arch: armv7
+#          cc: [gcc]
 
     steps:
     - name: Checkout repository
