@@ -40,10 +40,8 @@ jobs:
 
     - name: Build Windows
       run: |
-        dir "C:\Program Files\Microsoft Visual Studio\"
-        dir "C:\Program Files\Microsoft Visual Studio\2022"        
-        cmd /c dir /b/s "C:\Program Files\Microsoft Visual Studio\"\cl.exe
         mkdir bin
+        %comspec% /k "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat" && ^
         cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.pkg_suffix }}.exe
         echo "ASSET=bin/frt-${{ matrix.pkg_suffix }}.exe" >> $GITHUB_ENV
 
