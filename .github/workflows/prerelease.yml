@@ -74,8 +74,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # build: [linux, linux-arm-aarch64, linux-arm-v7]
-        build: [linux]
+        build: [linux, linux-arm-aarch64, linux-arm-v7]
         include:
         - build: linux
           os: ubuntu-22.04
