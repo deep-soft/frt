@@ -43,7 +43,7 @@ jobs:
       run: |
         mkdir bin
         echo call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars32.bat" >cmd_compile.bat
-        echo "cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.pkg_suffix }}.exe" >> >>cmd_compile.bat
+        echo "cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.pkg_suffix }}.exe" >> cmd_compile.bat
         type cmd_compile.bat
         cmd_compile.bat
         echo "ASSET=bin/frt-${{ matrix.pkg_suffix }}.exe" >> $GITHUB_ENV
@@ -53,7 +53,7 @@ jobs:
       run: |
         mkdir bin
         echo call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat" >cmd_compile.bat
-        echo "cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.pkg_suffix }}.exe" >> >>cmd_compile.bat
+        echo "cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.pkg_suffix }}.exe" >> cmd_compile.bat
         type cmd_compile.bat
         cmd_compile.bat
         echo "ASSET=bin/frt-${{ matrix.pkg_suffix }}.exe" >> $GITHUB_ENV
@@ -74,7 +74,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        build: [linux, linux-arm-aarch64, linux-arm-v7]
+        # build: [linux, linux-arm-aarch64, linux-arm-v7]
+        build: [linux]
         include:
         - build: linux
           os: ubuntu-22.04
