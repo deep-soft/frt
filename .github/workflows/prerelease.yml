@@ -41,7 +41,8 @@ jobs:
     - name: Build Windows
       run: |
         dir "C:\Program Files\Microsoft Visual Studio\"
-        dir /b/s "C:\Program Files\Microsoft Visual Studio\"\cl.exe
+        dir "C:\Program Files\Microsoft Visual Studio\2022"        
+        cmd /c dir /b/s "C:\Program Files\Microsoft Visual Studio\"\cl.exe
         mkdir bin
         cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.pkg_suffix }}.exe
         echo "ASSET=bin/frt-${{ matrix.pkg_suffix }}.exe" >> $GITHUB_ENV
@@ -88,8 +89,8 @@ jobs:
       run: |
         mkdir bin
         if [ "$CC" == "" ]; then CC=gcc ; fi
-        $CC frt.cpp frt_shared.c wildmat.c -o bin/frt-matrix.$arch "$@"
-        echo "ASSET=bin/frt-matrix.$arch" >> $GITHUB_ENV
+        $CC frt.cpp frt_shared.c wildmat.c -o bin/frt-${{ matrix.arch }} "$@"
+        echo "ASSET=bin/frt-${{ matrix.arch }}" >> $GITHUB_ENV
 
     - name: Strip release binary (linux)
       if: matrix.build == 'linux'
