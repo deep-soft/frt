@@ -47,11 +47,13 @@ jobs:
         echo "cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.arch }}.exe" >> cmd_compile.bat
         type cmd_compile.bat
         cmd /c cmd_compile.bat
+        exit
         cd bin
         7z a ../frt-${{ matrix.arch }}.zip frt-${{ matrix.arch }}.exe
         cd ..
         echo "ASSET=frt-${{ matrix.arch }}.zip" >> $GITHUB_ENV        
         dir frt-${{ matrix.arch }}.zip
+        set
 
     - name: Build Windows x64
       if: matrix.arch == 'x64'
@@ -62,11 +64,13 @@ jobs:
         echo "cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.arch }}.exe" >> cmd_compile.bat
         type cmd_compile.bat
         cmd /c cmd_compile.bat
+        exit
         cd bin
         7z a ../frt-${{ matrix.arch }}.zip frt-${{ matrix.arch }}.exe
         cd ..
         echo "ASSET=frt-${{ matrix.arch }}.zip" >> $GITHUB_ENV                
         dir frt-${{ matrix.arch }}.zip
+        set        
 
     - name: Check Release
       run: |
