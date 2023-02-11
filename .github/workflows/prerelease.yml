@@ -44,10 +44,11 @@ jobs:
         mkdir bin
         echo "call ^" > cmd_compile.bat
         echo '"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars32.bat"' >> cmd_compile.bat
-        echo "cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.pkg_suffix }}.exe" >> cmd_compile.bat
+        echo "cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.arch }}.exe" >> cmd_compile.bat
         type cmd_compile.bat
         cmd /c cmd_compile.bat
-        echo "ASSET=bin/frt-${{ matrix.pkg_suffix }}.exe" >> $GITHUB_ENV
+        echo "ASSET=bin/frt-${{ matrix.arch }}.exe" >> $GITHUB_ENV
+        echo ${{ env.ASSET }}
 
     - name: Build Windows x64
       if: matrix.arch == 'x64'
@@ -55,10 +56,11 @@ jobs:
         mkdir bin
         echo "call ^" > cmd_compile.bat
         echo '"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"' >> cmd_compile.bat
-        echo "cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.pkg_suffix }}.exe" >> cmd_compile.bat
+        echo "cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.arch }}.exe" >> cmd_compile.bat
         type cmd_compile.bat
         cmd /c cmd_compile.bat
-        echo "ASSET=bin/frt-${{ matrix.pkg_suffix }}.exe" >> $GITHUB_ENV
+        echo "ASSET=bin/frt-${{ matrix.arch }}.exe" >> $GITHUB_ENV
+        echo ${{ env.ASSET }}
 
     - name: Publish Release
       uses: deep-soft/action-gh-release@v1
