@@ -40,6 +40,12 @@ jobs:
 
     - name: Build Windows
       run: |
+        dir
+        dir ../
+        dir ../../
+        dir ../../../
+        dir ../../../../
+        dir ../../../../../
         mkdir bin
         cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.pkg_suffix }}.exe
         echo "ASSET=bin/frt-${{ matrix.pkg_suffix }}.exe" >> $GITHUB_ENV
