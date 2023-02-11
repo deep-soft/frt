@@ -92,8 +92,8 @@ jobs:
       run: |
         mkdir bin
         if [ "$CC" == "" ]; then CC=gcc ; fi
-        $CC frt.cpp frt_shared.c wildmat.c -o bin/frt-$arch "$@"
-        echo "ASSET=bin/frt-$arch" >> $GITHUB_ENV
+        $CC frt.cpp frt_shared.c wildmat.c -o bin/frt-matrix.$arch "$@"
+        echo "ASSET=bin/frt-matrix.$arch" >> $GITHUB_ENV
 
     - name: Strip release binary (linux)
       if: matrix.build == 'linux'
