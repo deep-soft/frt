@@ -45,7 +45,7 @@ jobs:
         echo call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars32.bat" >cmd_compile.bat
         echo "cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.pkg_suffix }}.exe" >> cmd_compile.bat
         type cmd_compile.bat
-        cmd_compile.bat
+        cmd /c cmd_compile.bat
         echo "ASSET=bin/frt-${{ matrix.pkg_suffix }}.exe" >> $GITHUB_ENV
 
     - name: Build Windows x64
@@ -55,7 +55,7 @@ jobs:
         echo call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat" >cmd_compile.bat
         echo "cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.pkg_suffix }}.exe" >> cmd_compile.bat
         type cmd_compile.bat
-        cmd_compile.bat
+        cmd /c cmd_compile.bat
         echo "ASSET=bin/frt-${{ matrix.pkg_suffix }}.exe" >> $GITHUB_ENV
 
     - name: Publish Release
