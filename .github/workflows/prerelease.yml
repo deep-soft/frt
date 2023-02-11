@@ -40,7 +40,6 @@ jobs:
 
     - name: Build Windows x86
       if: matrix.arch == 'x86'
-      shell: bash      
       run: |
         mkdir bin
         echo "call ^" > cmd_compile.bat
@@ -48,7 +47,11 @@ jobs:
         echo "cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.arch }}.exe" >> cmd_compile.bat
         type cmd_compile.bat
         cmd /c cmd_compile.bat
-        exit
+
+    - name: Build Windows x86 archive
+      if: matrix.arch == 'x86'
+      shell: bash      
+      run: |
         cd bin
         7z a ../frt-${{ matrix.arch }}.zip frt-${{ matrix.arch }}.exe
         cd ..
@@ -57,7 +60,6 @@ jobs:
 
     - name: Build Windows x64
       if: matrix.arch == 'x64'
-      shell: bash
       run: |
         mkdir bin
         echo "call ^" > cmd_compile.bat
@@ -65,7 +67,11 @@ jobs:
         echo "cl /Fo./bin/ frt.cpp frt_shared.c wildmat.c /link /out:bin/frt-${{ matrix.arch }}.exe" >> cmd_compile.bat
         type cmd_compile.bat
         cmd /c cmd_compile.bat
-        exit
+        
+    - name: Build Windows x64 archive
+      if: matrix.arch == 'x64'
+      shell: bash
+      run: |
         cd bin
         7z a ../frt-${{ matrix.arch }}.zip frt-${{ matrix.arch }}.exe
         cd ..
