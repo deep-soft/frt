@@ -63,16 +63,21 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        build: [linux, linux-arm]
+        build: [linux, linux-arm-aarch64, linux-arm-v7]
         include:
         - build: linux
           os: ubuntu-22.04
           arch: x86_64
           cc: [gcc]
 
-        - build: linux-arm
+        - build: linux-arm-aarch64
           os: ubuntu-22.04
-          arch: [aarch64, armv7]
+          arch: aarch64
+          cc: [gcc]
+          
+        - build: linux-arm-v7
+          os: ubuntu-22.04
+          arch: armv7
           cc: [gcc]
 
     steps:
@@ -96,8 +101,12 @@ jobs:
       if: matrix.build == 'linux'
       run: strip ${{ env.ASSET }}
 
-    - name: Strip release binary (arm)
-      if: matrix.build == 'linux-arm'
+    - name: Strip release binary (linux-arm-aarch64)
+      if: matrix.build == 'linux-arm-aarch64'
+      run: strip ${{ env.ASSET }}
+
+    - name: Strip release binary (linux-arm-v7)
+      if: matrix.build == 'linux-arm-v7'
       run: strip ${{ env.ASSET }}
 
     - name: Publish Release
