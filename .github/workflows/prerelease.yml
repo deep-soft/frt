@@ -40,6 +40,7 @@ jobs:
 
     - name: Build Windows x86
       if: matrix.arch == 'x86'
+      shell: bash      
       run: |
         mkdir bin
         echo "call ^" > cmd_compile.bat
@@ -52,11 +53,11 @@ jobs:
         7z a ../frt-${{ matrix.arch }}.zip frt-${{ matrix.arch }}.exe
         cd ..
         echo "ASSET=frt-${{ matrix.arch }}.zip" >> $GITHUB_ENV        
-        dir frt-${{ matrix.arch }}.zip
-        set
+        ls -l frt-${{ matrix.arch }}.zip
 
     - name: Build Windows x64
       if: matrix.arch == 'x64'
+      shell: bash
       run: |
         mkdir bin
         echo "call ^" > cmd_compile.bat
@@ -69,8 +70,7 @@ jobs:
         7z a ../frt-${{ matrix.arch }}.zip frt-${{ matrix.arch }}.exe
         cd ..
         echo "ASSET=frt-${{ matrix.arch }}.zip" >> $GITHUB_ENV                
-        dir frt-${{ matrix.arch }}.zip
-        set        
+        ls -l frt-${{ matrix.arch }}.zip
 
     - name: Check Release
       run: |
